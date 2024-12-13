@@ -915,3 +915,7 @@ class TestCalendar:
                 target={"entity_id": "calendar.noallday"},
                 blocking=True,
             )
+
+
+# TODO: Add unit tests for calendar with events that have no summary.  Do this
+# after completing TODO regarding the hard-coded default.
