@@ -1,23 +1,26 @@
 [project]
 name = "ics_calendar"
-version = "5.0.4"
+version = "5.0.5"
 readme = "README.md"
-requires-python = "==3.12"
+requires-python = "==3.12.*"
 dependencies = [
     'icalendar ~= 6.1',
     'python-dateutil >= 2.9.0.post0',
     'pytz >= 2024.1',
-    'recurring_ical_events >= 3.3.2',
+    'recurring_ical_events ~= 3.3, >= 3.3.4',
     'ics >= 0.7.2',
-    'arrow'
+    'arrow',
+    'httpx_auth == 0.22.0'
 ]
 
 [project.optional-dependencies]
 tests = [
     'pytest',
     'pytest-cov',
-    'pytest-homeassistant-custom-component>=0.13.172',
+    'pytest-homeassistant-custom-component>=0.13.192',
     'pytest-helpers-namespace>=2021.12.29',
+    'pytest-httpx==0.34.0',
+    'pytest-mock',
     'pytest-asyncio',
     'pytest-aiohttp',
     'aiohttp_cors',
@@ -585,3 +588,4 @@ redefining-builtins-modules = ["six.moves", "past.builtins", "future.builtins", 
 [tool.pytest.ini_options]
 addopts = "--allow-unix-socket --cov=custom_components.ics_calendar --cov-branch --cov-report html --cov-report xml"
 asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
