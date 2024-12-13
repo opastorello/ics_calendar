@@ -134,6 +134,8 @@ For plain string matching, the string will be searched for in a case insensitive
 
 You can also include multiple entries for exclude or include.
 
+> **NOTE**: If you want to include only events that include a specific string, you **must** use an exclude filter that excludes everything in addition to your include filter.  E.g. "['/.*/']"
+
 ## URL Templates
 If your ICS url requires specifying the current year and/or month, you can now use templates to specify the current year and month.  E.g. if you set your url to:
 ```yaml
