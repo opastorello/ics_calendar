@@ -160,9 +160,10 @@ class ICSCalendarEntity(CalendarEntity):
         :type device_data: dict
         """
         _LOGGER.debug(
-            "Initializing calendar: %s with URL: %s",
+            "Initializing calendar: %s with URL: %s, uniqueid: %s",
             device_data[CONF_NAME],
             device_data[CONF_URL],
+            unique_id,
         )
         self.data = ICSCalendarData(hass, device_data)
         self.entity_id = entity_id
