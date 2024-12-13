@@ -1,6 +1,12 @@
+## 5.0.5 2024/12/12
+- Fixed #166/#139/#183  Thanks to everyone who contributed questions and comments!
+- Possibly fixed #194. Updated dependencies based on comments for #194 Thanks @gaetanars, @tardich, and @wrichter for the research!
+- Partial fix for #125 -- events with no summary will for now receive a summary of "No title".  A future release should make this configurable.  Thanks @jonasglass and @maxhamilius!
+- More unit tests
+
 ## 5.0.5-beta1 2024/12/11
 - Fixed #166
-- Updated dependencies based on comments for #194
+- Possibly fixed #194. Updated dependencies based on comments for #194 Thanks @gaetanars, @tardich, and @wrichter for the research!
 - More unit tests
 
 ## !!! WARNING !!!
