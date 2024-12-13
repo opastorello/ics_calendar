@@ -329,7 +329,7 @@ class ICSCalendarData:  # pylint: disable=R0902
             event.summary = self._summary_prefix + event.summary
             # TODO: Make this configurable!
             if not event.summary:
-                event.summary = 'No title'
+                event.summary = "No title"
 
         return event_list
 
@@ -366,7 +366,7 @@ class ICSCalendarData:  # pylint: disable=R0902
             self.event.summary = self._summary_prefix + summary
             # TODO: Make this configurable!
             if not self.event.summary:
-                self.event.summary = 'No title'
+                self.event.summary = "No title"
             self.offset = offset
             return True
 
