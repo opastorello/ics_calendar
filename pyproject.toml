@@ -42,7 +42,7 @@ line-length = 79
 doctests = true
 max-complexity = 7
 radon-max-cc = 8
-exclude = [ '.venv', '.git', '__pycahce__', tests ]
+exclude = [ '.venv', '.git', '__pycahce__', 'tests' ]
 max-line-length = 85
 extend-ignore = [ 'E722' ]
 
