@@ -294,11 +294,10 @@ class ICSCalendarData:  # pylint: disable=R0902
             device_data[CONF_ACCEPT_HEADER],
         )
 
-        if CONF_SET_TIMEOUT in device_data:
-            if device_data[CONF_SET_TIMEOUT]:
-                self._calendar_data.set_timeout(
-                    device_data[CONF_CONNECTION_TIMEOUT]
-                )
+        if device_data.get(CONF_SET_TIMEOUT):
+            self._calendar_data.set_timeout(
+                device_data[CONF_CONNECTION_TIMEOUT]
+            )
 
     async def async_get_events(
         self, start_date: datetime, end_date: datetime
