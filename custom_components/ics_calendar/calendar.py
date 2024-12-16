@@ -278,9 +278,13 @@ class ICSCalendarData:  # pylint: disable=R0902
         self._calendar_data = CalendarData(
             get_async_client(hass),
             _LOGGER,
-            self.name,
-            device_data[CONF_URL],
-            timedelta(minutes=device_data[CONF_DOWNLOAD_INTERVAL]),
+            {
+                "name": self.name,
+                "url": device_data[CONF_URL],
+                "min_update_time": timedelta(
+                    minutes=device_data[CONF_DOWNLOAD_INTERVAL]
+                ),
+            },
         )
 
         self._calendar_data.set_headers(
