@@ -46,7 +46,7 @@ custom_components/ics_calendar/utility.py
 This component supports HTTP Basic Auth and HTTP Digest Auth.  It does not support more advanced authentication methods.
 
 ## Configuration
-Configuration is done via UI now.  Go to https://my.home-assistant.io/redirect/config/integrations/dashboard and click "Add Integration" to add ICS Calendar.  You'll want to do this for each calendar for this integration.
+Configuration is done via UI now.  Go to https://my.home-assistant.io/redirect/integrations/ and click "Add Integration" to add ICS Calendar.  You'll want to do this for each calendar for this integration.
 
 Please note that if you previously used configuration.yaml, you can remove those entries after updating to a version that supports UI configuration.
 
