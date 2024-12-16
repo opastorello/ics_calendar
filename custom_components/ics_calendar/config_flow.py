@@ -117,7 +117,7 @@ class ICSCalendarConfigFlow(ConfigFlow, domain=DOMAIN):
         """Construct ICSCalendarConfigFlow."""
         self.data = {}
 
-    def is_matching(self, other_flow: Self) -> bool:
+    def is_matching(self, _other_flow: Self) -> bool:
         """Match discovery method.
 
         This method doesn't do anything, because this integration has no
