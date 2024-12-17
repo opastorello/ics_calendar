@@ -35,6 +35,8 @@ from .const import (
     CONF_PARSER,
     CONF_REQUIRES_AUTH,
     CONF_SET_TIMEOUT,
+    CONF_SUMMARY_DEFAULT,
+    CONF_SUMMARY_DEFAULT_DEFAULT,
     CONF_USER_AGENT,
     DOMAIN,
 )
@@ -227,6 +229,7 @@ def add_missing_defaults(
         CONF_OFFSET_HOURS: 0,
         CONF_ACCEPT_HEADER: "",
         CONF_CONNECTION_TIMEOUT: 300.0,
+        CONF_SUMMARY_DEFAULT: CONF_SUMMARY_DEFAULT_DEFAULT,
     }
     data.update(entry.data)
 
