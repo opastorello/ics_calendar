@@ -34,7 +34,7 @@ jobs:
 
       - name: Run pytest
         run: |
-          uv run pytest tests/
+          PYTHONDONTWRITEBYTECODE=1 uv run pytest tests/
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
