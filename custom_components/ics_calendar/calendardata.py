@@ -28,7 +28,7 @@ class CalendarData:  # pylint: disable=R0902
     instance.
     """
 
-    def __init__(  # pylint: disable=R0913,R0917
+    def __init__(
         self,
         async_client: httpx.AsyncClient,
         logger: Logger,
