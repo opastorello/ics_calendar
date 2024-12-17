@@ -96,6 +96,10 @@ CONFIG_SCHEMA = vol.Schema(
                                     vol.Optional(
                                         CONF_CONNECTION_TIMEOUT, default=300
                                     ): cv.positive_float,
+                                    vol.Optional(
+                                        CONF_SUMMARY_DEFAULT,
+                                        default=CONF_SUMMARY_DEFAULT_DEFAULT,
+                                    ): cv.string,
                                 }
                             )
                         ]
