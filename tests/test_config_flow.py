@@ -27,6 +27,8 @@ from custom_components.ics_calendar import (
     CONF_PARSER,
     CONF_REQUIRES_AUTH,
     CONF_SET_TIMEOUT,
+    CONF_SUMMARY_DEFAULT,
+    CONF_SUMMARY_DEFAULT_DEFAULT,
     CONF_USER_AGENT,
     DOMAIN,
     config_flow,
@@ -180,7 +182,7 @@ class TestICSCalendarConfigFlow:
     async def test_async_step_calendar_opts_errors_for_bad_exclude(
         self, hass
     ) -> None:
-        """Test that async_step_user returns an error for an empty name."""
+        """Test that async_step_calendar_opts returns an error for an empty name."""
         # Arrange
         _result = await hass.config_entries.flow.async_init(
             DOMAIN, context={"source": "calendar_opts"}
@@ -196,7 +198,7 @@ class TestICSCalendarConfigFlow:
     async def test_async_step_calendar_opts_errors_for_bad_include(
         self, hass
     ) -> None:
-        """Test that async_step_user returns an error for an empty name."""
+        """Test that async_step_calendar_opts returns an error for an empty name."""
         # Arrange
         _result = await hass.config_entries.flow.async_init(
             DOMAIN, context={"source": "calendar_opts"}
@@ -212,7 +214,7 @@ class TestICSCalendarConfigFlow:
     async def test_async_step_calendar_opts_errors_for_same_exclude_include(
         self, hass
     ) -> None:
-        """Test that async_step_user returns an error for an empty name."""
+        """Test that async_step_calenar_opts returns an error for an empty name."""
         # Arrange
         _result = await hass.config_entries.flow.async_init(
             DOMAIN, context={"source": "calendar_opts"}
@@ -234,7 +236,7 @@ class TestICSCalendarConfigFlow:
     async def test_async_step_calendar_opts_errors_for_bad_download_interval(
         self, hass
     ) -> None:
-        """Test that async_step_user returns an error for an empty name."""
+        """Test that async_step_calendar_opts returns an error for an empty name."""
         # Arrange
         _result = await hass.config_entries.flow.async_init(
             DOMAIN, context={"source": "calendar_opts"}
@@ -257,7 +259,7 @@ class TestICSCalendarConfigFlow:
     async def test_async_step_calendar_opts_moves_to_connect_opts_step(
         self, hass
     ) -> None:
-        """Test that async_step_user moves to next step."""
+        """Test that async_step_calendar_opts moves to next step."""
         # Arrange
         expected = {
             "data_schema": config_flow.CONNECT_OPTS_SCHEMA,
@@ -280,6 +282,7 @@ class TestICSCalendarConfigFlow:
                 CONF_EXCLUDE: "",
                 CONF_INCLUDE: "",
                 CONF_DOWNLOAD_INTERVAL: 15,
+                CONF_SUMMARY_DEFAULT: CONF_SUMMARY_DEFAULT_DEFAULT,
             },
         )
         # Assert
@@ -311,7 +314,7 @@ class TestICSCalendarConfigFlow:
     async def test_async_step_connect_opts_errors_for_blank_url(
         self, hass
     ) -> None:
-        """Test that async_step_user returns an error for an empty name."""
+        """Test that async_step_connect_opts returns an error for an empty name."""
         # Arrange
         _result = await hass.config_entries.flow.async_init(
             DOMAIN, context={"source": "connect_opts"}
@@ -327,7 +330,7 @@ class TestICSCalendarConfigFlow:
     async def test_async_step_connect_opts_errors_for_empty_url(
         self, hass
     ) -> None:
-        """Test that async_step_user returns an error for an empty name."""
+        """Test that async_step_connect_opts returns an error for an empty name."""
         # Arrange
         _result = await hass.config_entries.flow.async_init(
             DOMAIN, context={"source": "connect_opts"}
@@ -343,7 +346,7 @@ class TestICSCalendarConfigFlow:
     async def test_async_step_connect_opts_moves_to_auth_opts_step(
         self, hass
     ) -> None:
-        """Test that async_step_user moves to auth_opt step if auth required."""
+        """Test that async_step_connect_opts moves to auth_opt step if auth required."""
         # Arrange
         expected = {
             "data_schema": config_flow.AUTH_OPTS_SCHEMA,
@@ -419,6 +422,7 @@ class TestICSCalendarConfigFlow:
             CONF_OFFSET_HOURS: 0,
             CONF_PARSER: "rie",
             CONF_PREFIX: "",
+            CONF_SUMMARY_DEFAULT: "test summary",
         }
         expected = {
             "context": {"source": "user"},
@@ -452,6 +456,7 @@ class TestICSCalendarConfigFlow:
                     CONF_EXCLUDE: data[CONF_EXCLUDE],
                     CONF_INCLUDE: data[CONF_INCLUDE],
                     CONF_DOWNLOAD_INTERVAL: data[CONF_DOWNLOAD_INTERVAL],
+                    CONF_SUMMARY_DEFAULT: data[CONF_SUMMARY_DEFAULT],
                 },
             )
 
@@ -508,6 +513,7 @@ class TestICSCalendarConfigFlow:
             CONF_OFFSET_HOURS: 0,
             CONF_PARSER: "rie",
             CONF_PREFIX: "",
+            CONF_SUMMARY_DEFAULT: CONF_SUMMARY_DEFAULT_DEFAULT,
         }
         expected = {
             "data_schema": config_flow.ADVANCED_CONNECT_OPTS_SCHEMA,
@@ -538,6 +544,7 @@ class TestICSCalendarConfigFlow:
                     CONF_EXCLUDE: data[CONF_EXCLUDE],
                     CONF_INCLUDE: data[CONF_INCLUDE],
                     CONF_DOWNLOAD_INTERVAL: data[CONF_DOWNLOAD_INTERVAL],
+                    CONF_SUMMARY_DEFAULT: data[CONF_SUMMARY_DEFAULT],
                 },
             )
             _result_url_opts = await hass.config_entries.flow.async_configure(
@@ -578,6 +585,7 @@ class TestICSCalendarConfigFlow:
             CONF_PREFIX: "",
             CONF_USERNAME: "username",
             CONF_PASSWORD: "password",
+            CONF_SUMMARY_DEFAULT: CONF_SUMMARY_DEFAULT_DEFAULT,
         }
         expected = {
             "context": {"source": "user"},
@@ -611,6 +619,84 @@ class TestICSCalendarConfigFlow:
                     CONF_EXCLUDE: data[CONF_EXCLUDE],
                     CONF_INCLUDE: data[CONF_INCLUDE],
                     CONF_DOWNLOAD_INTERVAL: data[CONF_DOWNLOAD_INTERVAL],
+                    CONF_SUMMARY_DEFAULT: data[CONF_SUMMARY_DEFAULT],
+                },
+            )
+            _result_url_opts = await hass.config_entries.flow.async_configure(
+                _result_cal_opts["flow_id"],
+                user_input={
+                    CONF_URL: data[CONF_URL],
+                    CONF_REQUIRES_AUTH: data[CONF_REQUIRES_AUTH],
+                    CONF_ADV_CONNECT_OPTS: data[CONF_ADV_CONNECT_OPTS],
+                },
+            )
+        # Act
+        result = await hass.config_entries.flow.async_configure(
+            _result_url_opts["flow_id"],
+            user_input={
+                CONF_USERNAME: data[CONF_USERNAME],
+                CONF_PASSWORD: data[CONF_PASSWORD],
+            },
+        )
+        # Assert
+        assert expected == result
+
+    @pytest.mark.asyncio
+    async def test_async_step_auth_opts_creates_entry_with_empty_summary(
+        self, hass
+    ) -> None:
+        """Test that async_step_auth_opts creates an entry."""
+        # Arrange
+        data = {
+            CONF_NAME: "test calendar",
+            CONF_URL: "https://localhost/test.ics",
+            CONF_REQUIRES_AUTH: True,
+            CONF_ADV_CONNECT_OPTS: False,
+            CONF_DOWNLOAD_INTERVAL: 15,
+            CONF_INCLUDE: "",
+            CONF_EXCLUDE: "",
+            CONF_DAYS: 1,
+            CONF_INCLUDE_ALL_DAY: False,
+            CONF_OFFSET_HOURS: 0,
+            CONF_PARSER: "rie",
+            CONF_PREFIX: "",
+            CONF_USERNAME: "username",
+            CONF_PASSWORD: "password",
+            CONF_SUMMARY_DEFAULT: CONF_SUMMARY_DEFAULT_DEFAULT,
+        }
+        expected = {
+            "context": {"source": "user"},
+            "data": data,
+            "description": None,
+            "description_placeholders": None,
+            "flow_id": ANY,
+            "handler": DOMAIN,
+            "minor_version": config_flow.ICSCalendarConfigFlow.MINOR_VERSION,
+            "options": {},
+            "result": ANY,
+            "title": data[CONF_NAME],
+            "type": FlowResultType.CREATE_ENTRY,
+            "version": config_flow.ICSCalendarConfigFlow.VERSION,
+        }
+        with patch(
+            "custom_components.ics_calendar.async_setup_entry",
+            return_value=True,
+        ):
+            _result = await hass.config_entries.flow.async_init(
+                DOMAIN, context={"source": "user"}
+            )
+            await hass.async_block_till_done()
+            _result_name = await hass.config_entries.flow.async_configure(
+                _result["flow_id"],
+                user_input={CONF_NAME: data[CONF_NAME]},
+            )
+            _result_cal_opts = await hass.config_entries.flow.async_configure(
+                _result_name["flow_id"],
+                user_input={
+                    CONF_EXCLUDE: data[CONF_EXCLUDE],
+                    CONF_INCLUDE: data[CONF_INCLUDE],
+                    CONF_DOWNLOAD_INTERVAL: data[CONF_DOWNLOAD_INTERVAL],
+                    CONF_SUMMARY_DEFAULT: "",
                 },
             )
             _result_url_opts = await hass.config_entries.flow.async_configure(
@@ -677,6 +763,7 @@ class TestICSCalendarConfigFlow:
             CONF_USER_AGENT: "user-agent",
             CONF_ACCEPT_HEADER: "accept",
             CONF_SET_TIMEOUT: True,
+            CONF_SUMMARY_DEFAULT: CONF_SUMMARY_DEFAULT_DEFAULT,
         }
         expected = {
             "data_schema": config_flow.TIMEOUT_OPTS_SCHEMA,
@@ -707,6 +794,7 @@ class TestICSCalendarConfigFlow:
                     CONF_EXCLUDE: data[CONF_EXCLUDE],
                     CONF_INCLUDE: data[CONF_INCLUDE],
                     CONF_DOWNLOAD_INTERVAL: data[CONF_DOWNLOAD_INTERVAL],
+                    CONF_SUMMARY_DEFAULT: data[CONF_SUMMARY_DEFAULT],
                 },
             )
             _result_url_opts = await hass.config_entries.flow.async_configure(
@@ -751,6 +839,7 @@ class TestICSCalendarConfigFlow:
             CONF_USER_AGENT: "user-agent",
             CONF_ACCEPT_HEADER: "accept",
             CONF_SET_TIMEOUT: False,
+            CONF_SUMMARY_DEFAULT: CONF_SUMMARY_DEFAULT_DEFAULT,
         }
         expected = {
             "context": {"source": "user"},
@@ -849,6 +938,7 @@ class TestICSCalendarConfigFlow:
             CONF_ACCEPT_HEADER: "accept",
             CONF_SET_TIMEOUT: True,
             CONF_CONNECTION_TIMEOUT: 50,
+            CONF_SUMMARY_DEFAULT: CONF_SUMMARY_DEFAULT_DEFAULT,
         }
         expected = {
             "context": {"source": "user"},
@@ -882,6 +972,7 @@ class TestICSCalendarConfigFlow:
                     CONF_EXCLUDE: data[CONF_EXCLUDE],
                     CONF_INCLUDE: data[CONF_INCLUDE],
                     CONF_DOWNLOAD_INTERVAL: data[CONF_DOWNLOAD_INTERVAL],
+                    CONF_SUMMARY_DEFAULT: data[CONF_SUMMARY_DEFAULT],
                 },
             )
             _result_url_opts = await hass.config_entries.flow.async_configure(
