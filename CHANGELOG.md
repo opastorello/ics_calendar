@@ -1,3 +1,11 @@
+## 5.0.6 2024/12/??
+- Fixed #125
+- Fixed #200
+- Fixed #205
+
+## !!! WARNING !!!
+This may introduce a regression on issue #117.  If that was a problem for you, please re-open the issue if it recurs with this release.
+
 ## 5.0.6-beta2 2024/12/13
 - Second BETA fix for issue 200
 - BETA fix for issue 200??
