@@ -28,7 +28,7 @@ TEST_TEMPLATE_URL_REPLACED = "http://127.0.0.1/test/2022/01/allday.ics"
 
 def set_calendar_data(calendar_data: CalendarData, data: str):
     """Set _calendarData for the passed CalendarData object."""
-    calendar_data._calendar_data = data  # pylint: disable=W0212
+    calendar_data._calendar_data = data
 
 
 def mock_response(req, data: str, encoding: str = None):
