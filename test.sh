@@ -6,5 +6,5 @@ fi
 
 TOP=`pwd`
 rm -rf htmlcov/* coverage.xml
-pytest ${TEST}
+PYTHONDONTWRITEBYTECODE=1 uv run pytest ${TEST}
 echo "To view coverage, open ${TOP}/htmlcov/index.html"

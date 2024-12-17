@@ -67,9 +67,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         calendar_data.set_headers("", "", "", "")
 
@@ -83,9 +85,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         calendar_data.set_headers("", "", "", "text/calendar")
 
@@ -99,9 +103,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         calendar_data.set_headers("", "", "Mozilla/5.0", "")
 
@@ -115,9 +121,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         calendar_data.set_headers("username", "password", "", "")
 
@@ -131,9 +139,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         calendar_data.set_headers("username", "password", "Mozilla/5.0", "")
 
@@ -147,9 +157,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         calendar_data.set_headers("username", "password", "", "text/calendar")
 
@@ -163,9 +175,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         calendar_data.set_headers(
             "username", "password", "Mozilla/5.0", "text/calendar"
@@ -176,9 +190,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         set_calendar_data(calendar_data, CALENDAR_DATA)
         assert calendar_data.get() == CALENDAR_DATA
@@ -192,9 +208,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         httpx_mock.add_response(url=TEST_URL, content=BINARY_CALENDAR_DATA)
         await calendar_data.download_calendar()
@@ -230,9 +248,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_TEMPLATE_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_TEMPLATE_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         await calendar_data.download_calendar()
         assert calendar_data.get() == CALENDAR_DATA
@@ -248,9 +268,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         httpx_mock.add_exception(httpx.DecodingError("Decoding error"))
         await calendar_data.download_calendar()
@@ -265,9 +287,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         httpx_mock.add_exception(httpx.HTTPError("Generic error"))
         await calendar_data.download_calendar()
@@ -283,9 +307,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         httpx_mock.add_exception(httpx.InvalidURL("Invalid URL"))
         await calendar_data.download_calendar()
@@ -302,9 +328,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         timeout = 1.5
         calendar_data.set_timeout(timeout)
@@ -333,9 +361,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         httpx_mock.add_response(status_code=500)
         await calendar_data.download_calendar()
@@ -360,9 +390,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         httpx_mock.add_response(content=BINARY_CALENDAR_DATA)
         httpx_mock.add_response(content=BINARY_CALENDAR_DATA_2)
@@ -390,9 +422,11 @@ class TestCalendarData:
         calendar_data = CalendarData(
             httpx.AsyncClient(),
             logger,
-            CALENDAR_NAME,
-            TEST_URL,
-            timedelta(minutes=5),
+            {
+                "name": CALENDAR_NAME,
+                "url": TEST_URL,
+                "min_update_time": timedelta(minutes=5),
+            },
         )
         httpx_mock.add_response(
             url=TEST_URL, content=BINARY_CALENDAR_DATA, is_optional=True
@@ -405,23 +439,3 @@ class TestCalendarData:
 
         assert not await calendar_data.download_calendar()
         assert calendar_data.get() == CALENDAR_DATA
-
-    # This isn't a good way to test this, since it relies on knowing how
-    # HTTPHandler passes the timeout, but since we're mocking that anyway,
-    # we might as well do it here, and use our knowledge. :(
-    # def test_download_calendar_has_timeout(self, logger, hass):
-    #    """Test that timeout is set properly."""
-    #    timeout = 1.5
-    #    timeout_str = f"{timeout}"
-    #    calendar_data = CalendarData(
-    #        httpx.AsyncClient(),
-    #        logger,
-    #        CALENDAR_NAME,
-    #        TEST_URL,
-    #        timedelta(minutes=5)
-    #    )
-    #    calendar_data.set_timeout(timeout)
-    #    opener = build_opener(MockHTTPHandlerTimeoutValue)
-    #    install_opener(opener)
-    #    assert await calendar_data.download_calendar()
-    #    assert calendar_data.get() == timeout_str

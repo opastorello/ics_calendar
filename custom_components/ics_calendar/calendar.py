@@ -43,6 +43,7 @@ from .const import (
     CONF_OFFSET_HOURS,
     CONF_PARSER,
     CONF_SET_TIMEOUT,
+    CONF_SUMMARY_DEFAULT_DEFAULT,
     CONF_USER_AGENT,
     DOMAIN,
 )
@@ -278,9 +279,13 @@ class ICSCalendarData:  # pylint: disable=R0902
         self._calendar_data = CalendarData(
             get_async_client(hass),
             _LOGGER,
-            self.name,
-            device_data[CONF_URL],
-            timedelta(minutes=device_data[CONF_DOWNLOAD_INTERVAL]),
+            {
+                "name": self.name,
+                "url": device_data[CONF_URL],
+                "min_update_time": timedelta(
+                    minutes=device_data[CONF_DOWNLOAD_INTERVAL]
+                ),
+            },
         )
 
         self._calendar_data.set_headers(
@@ -290,11 +295,10 @@ class ICSCalendarData:  # pylint: disable=R0902
             device_data[CONF_ACCEPT_HEADER],
         )
 
-        if CONF_SET_TIMEOUT in device_data:
-            if device_data[CONF_SET_TIMEOUT]:
-                self._calendar_data.set_timeout(
-                    device_data[CONF_CONNECTION_TIMEOUT]
-                )
+        if device_data.get(CONF_SET_TIMEOUT):
+            self._calendar_data.set_timeout(
+                device_data[CONF_CONNECTION_TIMEOUT]
+            )
 
     async def async_get_events(
         self, start_date: datetime, end_date: datetime
@@ -329,7 +333,7 @@ class ICSCalendarData:  # pylint: disable=R0902
             event.summary = self._summary_prefix + event.summary
             # TODO: Make this configurable!
             if not event.summary:
-                event.summary = "No title"
+                event.summary = CONF_SUMMARY_DEFAULT_DEFAULT
 
         return event_list
 
@@ -366,7 +370,7 @@ class ICSCalendarData:  # pylint: disable=R0902
             self.event.summary = self._summary_prefix + summary
             # TODO: Make this configurable!
             if not self.event.summary:
-                self.event.summary = "No title"
+                self.event.summary = CONF_SUMMARY_DEFAULT_DEFAULT
             self.offset = offset
             return True
 
