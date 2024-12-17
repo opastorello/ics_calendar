@@ -69,6 +69,24 @@ def allday_config():
 
 
 @pytest.fixture()
+def summary_default_config():
+    """Provide fixture for config that includes allday events."""
+    return {
+        DOMAIN: {
+            "calendars": [
+                {
+                    "name": "summary_default",
+                    "url": "http://test.local/tests/allday.ics",
+                    "include_all_day": "true",
+                    "days": "1",
+                    "summary_default": "Summary was empty",
+                }
+            ],
+        }
+    }
+
+
+@pytest.fixture()
 def noallday_config():
     """Provide fixture for config that does not include allday events."""
     return {
