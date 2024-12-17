@@ -1,3 +1,16 @@
+## 5.0.6-beta2 2024/12/13
+- Second BETA fix for issue 200
+- BETA fix for issue 200??
+
+## !!! WARNING !!!
+Please do not use this beta release at this time, unless franc6 has asked you to, things might break badly.
+
+## 5.0.6-beta1 2024/12/13
+- BETA fix for issue 200??
+
+## !!! WARNING !!!
+Please do not use this beta release at this time, unless franc6 has asked you to, things might break badly.
+
 ## 5.0.5 2024/12/12
 - Fixed #166/#139/#183  Thanks to everyone who contributed questions and comments!
 - Possibly fixed #194. Updated dependencies based on comments for #194 Thanks @gaetanars, @tardich, and @wrichter for the research!
