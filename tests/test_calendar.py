@@ -71,6 +71,17 @@ def _mocked_event():
     )
 
 
+def _mocked_event_no_summary():
+    """Provide fixture to mock a single event."""
+    return CalendarEvent(
+        summary="",
+        start=hadt.as_local(dtparser.parse("2022-01-03T00:00:00")),
+        end=hadt.as_local(dtparser.parse("2022-01-03T05:00:00")),
+        location="Test location",
+        description="Test description",
+    )
+
+
 def _mocked_event_list():
     """Provide fixture to mock a list of events."""
     return [
@@ -94,6 +105,33 @@ def _mocked_event_list():
             end=dtparser.parse("2022-01-05T05:00:00Z"),
             location="Test location",
             description="Test description",
+        ),
+    ]
+
+
+def _mocked_event_list_no_summary():
+    """Provide fixture to mock a list of events without summaries."""
+    return [
+        CalendarEvent(
+            summary="",
+            start=dtparser.parse("2022-01-04T00:00:00Z"),
+            end=dtparser.parse("2022-01-04T05:00:00Z"),
+            location="Test location",
+            description="Test description 2",
+        ),
+        CalendarEvent(
+            summary="",
+            start=dtparser.parse("2022-01-03T00:00:00Z"),
+            end=dtparser.parse("2022-01-03T05:00:00Z"),
+            location="Test location",
+            description="Test description",
+        ),
+        CalendarEvent(
+            summary="",
+            start=dtparser.parse("2022-01-05T00:00:00Z"),
+            end=dtparser.parse("2022-01-05T05:00:00Z"),
+            location="Test location",
+            description="Test description 3",
         ),
     ]
 
@@ -997,6 +1035,119 @@ class TestCalendar:
                 blocking=True,
             )
 
+    @pytest.mark.asyncio
+    @patch(
+        "custom_components.ics_calendar.calendar.hanow",
+        return_value=dtparser.parse("2022-01-01T00:00:01"),
+    )
+    @patch(
+        "homeassistant.util.dt.now",
+        return_value=dtparser.parse("2022-01-01T00:00:01"),
+    )
+    @patch(
+        "custom_components.ics_calendar.calendardata.CalendarData.download_calendar",
+        return_value=False,
+        new_callable=AsyncMock,
+    )
+    @patch(
+        "custom_components.ics_calendar.calendardata.CalendarData.get",
+        return_value=_mocked_calendar_data("tests/issue125.ics"),
+    )
+    @patch(
+        "custom_components.ics_calendar.parsers.parser_rie.ParserRIE"
+        ".get_current_event",
+        return_value=_mocked_event_no_summary(),
+    )
+    async def test_configured_default_summary(
+        self,
+        mock_event,
+        mock_get,
+        mock_download,
+        mock_dt_now,
+        mock_now,
+        hass,
+        summary_default_config,
+    ):
+        """Test configured summary applies to empty summary."""
+        # Must reset return_value here or only the first parametrized run will
+        # succeed.
+        mock_event.return_value = copy.deepcopy(_mocked_event_no_summary())
+        # Make a deep copy into mocked_event now, so we can use it with
+        # strftime later.
+        mocked_event = copy.deepcopy(mock_event())
 
-# TODO: Add unit tests for calendar with events that have no summary.  Do this
-# after completing TODO regarding the hard-coded default.
+        mock_dt_now.return_value = hadt.as_local(
+            dtparser.parse("2022-01-01T00:00:01")
+        )
+        mock_now.return_value = hadt.as_local(
+            dtparser.parse("2022-01-01T00:00:01")
+        )
+
+        assert await async_setup_component(
+            hass, DOMAIN, summary_default_config
+        )
+        await hass.async_block_till_done()
+
+        state = hass.states.get("calendar.summary_default")
+
+        assert dict(state.attributes) == {
+            "friendly_name": "summary_default",
+            "message": "Summary was empty",
+            "all_day": False,
+            "start_time": mocked_event.start.strftime(DATE_STR_FORMAT),
+            "end_time": mocked_event.end.strftime(DATE_STR_FORMAT),
+            "location": mocked_event.location,
+            "description": mocked_event.description,
+            "offset_reached": False,
+        }
+        assert state.state == STATE_OFF
+
+    @pytest.mark.asyncio
+    @patch(
+        "custom_components.ics_calendar.calendar.hanow",
+        return_value=dtparser.parse("2022-01-03T00:00:01Z"),
+    )
+    @patch(
+        "homeassistant.util.dt.now",
+        return_value=dtparser.parse("2022-01-03T00:00:01Z"),
+    )
+    @patch(
+        "custom_components.ics_calendar.calendardata.CalendarData.download_calendar",
+        return_value=False,
+        new_callable=AsyncMock,
+    )
+    @patch(
+        "custom_components.ics_calendar.calendardata.CalendarData.get",
+        return_value=_mocked_calendar_data("tests/issue125.ics"),
+    )
+    @patch(
+        "custom_components.ics_calendar.parsers.parser_rie.ParserRIE"
+        ".get_event_list",
+        return_value=_mocked_event_list_no_summary(),
+    )
+    async def test_get_events_no_summary(
+        self,
+        mock_event_list_no_summary,
+        mock_get,
+        mock_download,
+        mock_dt_now,
+        mock_now,
+        hass,
+        get_api_events,
+        summary_default_config,
+    ):
+        """Test get_api_events."""
+        assert await async_setup_component(
+            hass, DOMAIN, summary_default_config
+        )
+        await hass.async_block_till_done()
+
+        events = await get_api_events("calendar.summary_default")
+        assert len(events) == len(mock_event_list_no_summary())
+        for event in events:
+            assert (
+                event["summary"]
+                == summary_default_config[DOMAIN]["calendars"][0][
+                    "summary_default"
+                ]
+            )
