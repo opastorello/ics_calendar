@@ -1,9 +1,6 @@
 """Provide CalendarData class."""
 
 from logging import Logger
-from socket import (  # type: ignore[attr-defined]  # private, not in typeshed
-    _GLOBAL_DEFAULT_TIMEOUT,
-)
 
 import httpx
 import httpx_auth
@@ -51,7 +48,7 @@ class CalendarData:  # pylint: disable=R0902
         self.logger = logger
         self.name = conf["name"]
         self.url = conf["url"]
-        self.connection_timeout = _GLOBAL_DEFAULT_TIMEOUT
+        self.connection_timeout = None
         self._httpx = async_client
 
     async def download_calendar(self) -> bool:
