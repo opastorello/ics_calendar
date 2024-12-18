@@ -1,7 +1,7 @@
 ## 5.1.0 2024/12/18
 - Fixed #125 You can now configure a default summary for events that don't have a summary in the calendar.
 - Fixed #200
-- FIxed #205
+- Fixed #205
 
 ## !!! WARNING !!!
 This may introduce a regression on issue #117.  If that was a problem for you, please re-open the issue if it recurs with this release.
