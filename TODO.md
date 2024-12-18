@@ -6,6 +6,7 @@
 
 ## General
 - [X] Figure out how to get entries named something other than "ICS Calendar" when looking at separate entries in Setup (5.0.4)
+- [] Determine if #193 is a problem ics_calendar can resolve or not
 
 ## UI Config
 - [ ] Revamp UI config, especially for URLs (see #133, #116, #169)

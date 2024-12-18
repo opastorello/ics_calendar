@@ -1,5 +1,5 @@
-## 5.0.6 2024/12/??
-- Fixed #125
+## 5.1.0 2024/12/18
+- Fixed #125 You can now configure a default summary for events that don't have a summary in the calendar.
 - Fixed #200
 - Fixed #205
 
